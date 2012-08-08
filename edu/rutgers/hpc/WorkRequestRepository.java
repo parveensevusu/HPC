@@ -9,7 +9,7 @@ import org.ektorp.support.GenerateView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Filter( name = "assignments_by_worker_id", file="filter_assignments_by_worker_id.js" )
+
 @Component
 public class WorkRequestRepository extends CouchDbRepositorySupport<WorkRequest> {
 

@@ -1,5 +1,6 @@
 package edu.rutgers.hpc;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class WorkRequest extends CouchDbDocument{
 	private Cost costEstimate;
 	private String type;
 	private String requestID;
+	private Timestamp deadLine;
+	private String taskDescription;
 	
 	public WorkRequest()
 	{
@@ -49,6 +52,18 @@ public class WorkRequest extends CouchDbDocument{
 	}
 	public void setRequestID(String requestID) {
 		this.requestID = requestID;
+	}
+	public Timestamp getDeadLine() {
+		return deadLine;
+	}
+	public void setDeadLine(Timestamp deadLine) {
+		this.deadLine = deadLine;
+	}
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
 	}
 	
 

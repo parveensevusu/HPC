@@ -4,6 +4,8 @@ package edu.rutgers.hpc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import org.codehaus.jackson.annotate.*;
 import org.ektorp.support.CouchDbDocument;
@@ -12,14 +14,17 @@ import org.ektorp.support.CouchDbDocument;
 public class WorkOutput  extends CouchDbDocument 
 {
 	private String workAssignmentID;
-	private HashMap<String,ArrayList> results;
+	private HashMap<String,String> results;
 	private Cost actualCost;
 	private String type;
+	private String workOutputID;
 	
 	
 	public WorkOutput()
 	{
 		setType("WorkOutput");
+		UUID workOutputUUID = UUID.randomUUID();
+		setWorkOutputID(workOutputUUID.toString());
 	}
 	public String getWorkAssignmentID() {
 		return workAssignmentID;
@@ -27,10 +32,10 @@ public class WorkOutput  extends CouchDbDocument
 	public void setWorkAssignmentID(String workAssignmentID) {
 		this.workAssignmentID = workAssignmentID;
 	}
-	public HashMap<String,ArrayList> getResults() {
+	public HashMap<String,String> getResults() {
 		return results;
 	}
-	public void setResults(HashMap<String,ArrayList> results) {
+	public void setResults(HashMap<String,String> results) {
 		this.results = results;
 	}
 	public Cost getActualCost() {
@@ -44,6 +49,12 @@ public class WorkOutput  extends CouchDbDocument
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getWorkOutputID() {
+		return workOutputID;
+	}
+	public void setWorkOutputID(String workOutputID) {
+		this.workOutputID = workOutputID;
 	}
 	
 }

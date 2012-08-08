@@ -6,6 +6,11 @@ import java.sql.*;
 
 public interface HPCInterface {
 	
-	public Map<String, Object> invoke(String taskDescription,Map<String,Object> input, Timestamp deadLine, List<String> skills, Cost cost) ;
+	
+
+
+	public HashMap<String, String> invoke(String taskDescription,
+			HashMap<String, String> input, long deadLine,
+			List<String> skillsNeeded, Cost cost) throws Exception;
 
 }

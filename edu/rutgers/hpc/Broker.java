@@ -1,12 +1,15 @@
 package edu.rutgers.hpc;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.ektorp.*;
 import org.ektorp.impl.*;
@@ -37,11 +40,15 @@ public class Broker {
 		{
 			System.out.println("CouchDB is down");
 		}
-		ChangesCommand chgcmd = new ChangesCommand.Builder().includeDocs(true).filter("User/by_type").param("type", "WorkRequest").build();
+		ChangesCommand chgcmd = new ChangesCommand.Builder().continuous(true).heartbeat(10).includeDocs(true).filter("User/by_type").param("type", "WorkRequest").build();
 		ChangesFeed feed = db.changesFeed(chgcmd);
 
 		while (feed.isAlive()) {
-		    DocumentChange change = feed.next();
+			 DocumentChange change = null;
+			
+		     change = feed.next();
+			
+			
 		    String docId = change.getId();
 		    System.out.println("docid = "+ docId);
 		    System.out.println("doc =" + change.getDoc());
@@ -61,13 +68,24 @@ public class Broker {
 		    List retworkRequests =    workRequestRepository.findByRequestID(requestID);
 		    
 		    WorkRequest workRequest = (WorkRequest)retworkRequests.get(0);
+		    List<String> skillsNeeded = workRequest.getSkillsNeeded();
+		    
+		    WorkerRepository workerRespository = new WorkerRepository(db);
+		    
+		    List<Worker> workersAvailable = workerRespository.findBySkill(skillsNeeded.get(0));
+		    if(workersAvailable == null || workersAvailable.size() == 0)
+		    {
+		    	System.out.println("No worker match");
+		    	continue;
+		    }
+		    
 		    System.out.println("Work Request ID = "+ workRequest.getRequestID());
 		 //   workerRepository.remove((Worker) returnedUsers1.get(0));
 		  //  userRepository.remove((User) returnedUsers.get(0));
 		    
 		    WorkAssignment workAssignment = new WorkAssignment();
 		    workAssignment.setRequestorID(workRequest.getRequestorID());
-		    workAssignment.setWorkerID("joe");
+		    workAssignment.setWorkerID(workersAvailable.get(0).getUserID());
 		    workAssignment.setWorkRequestID(requestID);
 		    
 		    WorkAssignmentRepository workassignmentRespository = new WorkAssignmentRepository(db);
@@ -80,7 +98,8 @@ public class Broker {
 		    WorkAssignment retassignment = (WorkAssignment) assignments.get(0);
 		    
 		    System.out.println("Work is assigned to " + retassignment.getWorkerID());
-		    System.out.println("Work is assigned to " + retassignment.getId());
+		    System.out.println("WorkAssignment ID = " + retassignment.getWorkAssignmentID());
+			
 		    
 		}
 

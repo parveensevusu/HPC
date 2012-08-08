@@ -3,9 +3,9 @@ function (doc,req)
 {
 		if(doc.type == "WorkAssignment" )
 			{
-			  if(doc.workerID)
+			  if(doc.workRequestID)
 				  {
-				     if (doc.workerID == req.query.workerID)
+				     if (doc.workRequestID == req.query.requestID)
 				    	 {
 				    	 return true;
 				    	 }

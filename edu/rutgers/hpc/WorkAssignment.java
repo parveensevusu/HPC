@@ -1,6 +1,8 @@
 package edu.rutgers.hpc;
 
 
+import java.util.UUID;
+
 import org.codehaus.jackson.annotate.*;
 import org.ektorp.support.CouchDbDocument;
 
@@ -13,11 +15,14 @@ public class WorkAssignment extends CouchDbDocument {
 	private String type;
 	private String workAssignmentID;
 	private String status;
-	
+	private String workInputID;
+	private String workOutputID;
 	
 	public WorkAssignment()
 	{
 		setType("WorkAssignment");
+		  UUID assignmentID = UUID.randomUUID();
+		setWorkAssignmentID(assignmentID.toString());
 	}
 	public String getWorkerID() {
 		return workerID;
@@ -54,6 +59,18 @@ public class WorkAssignment extends CouchDbDocument {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getWorkInputID() {
+		return workInputID;
+	}
+	public void setWorkInputID(String workInputID) {
+		this.workInputID = workInputID;
+	}
+	public String getWorkOutputID() {
+		return workOutputID;
+	}
+	public void setWorkOutputID(String workOutputID) {
+		this.workOutputID = workOutputID;
 	}
 	
 
