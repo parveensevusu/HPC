@@ -56,7 +56,9 @@ public class HPC implements HPCInterface {
 	// User listens for WorkAssignment for his workRequest
 	// User listens for WorkOuput for his WorkRequest + Work Assignment
 
-	private static String DB_URL = "http://127.0.0.1:5984/";
+	//private static String DB_URL = "http://127.0.0.1:5984/";
+	private static String DB_URL = "https://hpc.iriscouch.com:6984/";
+	
 	private static String BROKER_DB = "brokerdb";
 	private static String IO_DB = "iodb";
 	private User user = null;
@@ -67,6 +69,8 @@ public class HPC implements HPCInterface {
 	private CouchDbConnector brokerdb = null;
 	private CouchDbConnector iodb = null;
 	long dbSequenceNumber;
+	private static String DB_USER="vpathak";
+	private static String DB_PWD="vpathak123";
 
 	public HPC(User user) throws Exception {
 		this.user = user;
@@ -116,7 +120,10 @@ public class HPC implements HPCInterface {
 	private boolean isDataBaseAlive() {
 		try {
 
-			httpClient = new StdHttpClient.Builder().url(DB_URL).build();
+		//	httpClient = new StdHttpClient.Builder().url(DB_URL).build();
+			
+			HttpClient httpClient = new StdHttpClient.Builder().url(DB_URL).username(DB_USER).password(DB_PWD).enableSSL(true).relaxedSSLSettings(true).build();
+			
 
 			dbInstance = new StdCouchDbInstance(httpClient);
 			brokerdb = dbInstance.createConnector(BROKER_DB, true);

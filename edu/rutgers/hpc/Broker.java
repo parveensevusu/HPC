@@ -28,8 +28,10 @@ public class Broker {
 
 
 
-		HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
+		HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 		CouchDbConnector db = null;

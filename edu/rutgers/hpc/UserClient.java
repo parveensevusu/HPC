@@ -27,13 +27,16 @@ public class UserClient {
 
 
 
-		HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+		//HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
+		HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+		
 		
 		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 		
-HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+    //HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
+		 HttpClient httpClient2 = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance2 = new StdCouchDbInstance(httpClient2);
 		
@@ -47,6 +50,7 @@ HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/
 		}catch(DbAccessException connectionException)
 		{
 			System.out.println("CouchDB is down");
+			connectionException.printStackTrace();
 		}
 		User user = new User();
 		user.setUserID("parveen");

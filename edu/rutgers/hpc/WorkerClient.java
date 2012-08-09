@@ -26,14 +26,19 @@ public class WorkerClient {
 
 
 
-		HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
 	
+		HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 		
 
-		HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+		//HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
+	//	HttpClient httpClient2 = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
+		HttpClient httpClient2 = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance2 = new StdCouchDbInstance(httpClient2);
 		
@@ -53,7 +58,7 @@ public class WorkerClient {
 		
 		
 
-		ChangesCommand chgcmd = new ChangesCommand.Builder().includeDocs(true).filter("Worker/assignments_by_worker_id").param("workerID", "joe").build();
+		ChangesCommand chgcmd = new ChangesCommand.Builder().continuous(true).heartbeat(10).includeDocs(true).filter("Worker/assignments_by_worker_id").param("workerID", "joe").build();
 		ChangesFeed feed = db.changesFeed(chgcmd);
 		
 
