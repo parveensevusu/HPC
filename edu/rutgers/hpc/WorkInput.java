@@ -16,6 +16,7 @@ public class WorkInput  extends CouchDbDocument
 	private HashMap<String,String> input;
 	private String type;
 	private String workInputID;
+	private ArrayList authors;
 	
 	
 	
@@ -48,6 +49,12 @@ public class WorkInput  extends CouchDbDocument
 	}
 	public void setWorkInputID(String workInputID) {
 		this.workInputID = workInputID;
+	}
+	public ArrayList getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList authors) {
+		this.authors = authors;
 	}
 	
 }

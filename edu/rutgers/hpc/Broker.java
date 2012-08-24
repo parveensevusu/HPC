@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.ektorp.*;
 import org.ektorp.impl.*;
@@ -31,7 +33,10 @@ public class Broker {
 	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
 	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
-		HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+		
+		HttpClient httpClient = new StdHttpClient.Builder().url("https://127.0.0.1:6984/").username("broker").password("hpc1234").enableSSL(true).relaxedSSLSettings(true).build();
+		
 		
 		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 		CouchDbConnector db = null;
@@ -89,7 +94,17 @@ public class Broker {
 		    workAssignment.setRequestorID(workRequest.getRequestorID());
 		    workAssignment.setWorkerID(workersAvailable.get(0).getUserID());
 		    workAssignment.setWorkRequestID(requestID);
+		    workAssignment.setAssignmentStatus("assigned");
+		    ArrayList authors = new ArrayList();
+			authors.add(workersAvailable.get(0).getUserID());
+			authors.add(workRequest.getRequestorID());
+			authors.add("broker");
+			workAssignment.setAuthors(authors);
 		    
+		    java.util.Date date = new java.util.Date();
+		    java.sql.Timestamp ts = new java.sql.Timestamp(date.getTime());
+		    
+		    workAssignment.setAssignmentStatusTimeStamp(ts.toString());
 		    WorkAssignmentRepository workassignmentRespository = new WorkAssignmentRepository(db);
 		    
 		    workassignmentRespository.add(workAssignment);

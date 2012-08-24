@@ -1,6 +1,7 @@
 package edu.rutgers.hpc;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import org.codehaus.jackson.annotate.*;
 import org.ektorp.support.CouchDbDocument;
@@ -20,6 +21,7 @@ public class User extends CouchDbDocument{
 	private Date dateCreated;
 	private Date dateUpdated;
 	private String type;
+	private ArrayList authors;
 
 	public User()
 	{
@@ -90,6 +92,12 @@ public class User extends CouchDbDocument{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public ArrayList getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList authors) {
+		this.authors = authors;
 	}
 	
 

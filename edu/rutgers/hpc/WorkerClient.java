@@ -30,15 +30,19 @@ public class WorkerClient {
 
 	//	HttpClient httpClient = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
 	
-		HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+	//	HttpClient httpClient = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+	
+		HttpClient httpClient = new StdHttpClient.Builder().url("https://127.0.0.1:6984/").username("joe").password("hpc1234").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 		
 
-		//HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
+	//	HttpClient httpClient2 = new StdHttpClient.Builder().url("http://127.0.0.1:5984/").build();
 	
 	//	HttpClient httpClient2 = new StdHttpClient.Builder().url("http://hpc.iriscouch.com:5984/").build();
-		HttpClient httpClient2 = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+		//HttpClient httpClient2 = new StdHttpClient.Builder().url("https://hpc.iriscouch.com:6984/").username("vpathak").password("vpathak123").enableSSL(true).relaxedSSLSettings(true).build();
+		
+		HttpClient httpClient2 = new StdHttpClient.Builder().url("https://127.0.0.1:6984/").username("joe").password("hpc1234").enableSSL(true).relaxedSSLSettings(true).build();
 		
 		CouchDbInstance dbInstance2 = new StdCouchDbInstance(httpClient2);
 		
@@ -105,8 +109,27 @@ public class WorkerClient {
 		    System.out.println("Work is assigned to " + retassignment.getWorkerID());
 		    System.out.println("Work is assigned to " + retassignment.getWorkAssignmentID());
 		    
-		    
-		    if(retassignment.getWorkInputID() != null && retassignment.getWorkOutputID() == null)
+		    if(retassignment.getAssignmentStatus() != null && retassignment.getAssignmentStatus().equals("assigned") )
+		    {
+		    	retassignment.setAssignmentStatus("estimated");
+		    	java.util.Date date = new java.util.Date();
+				java.sql.Timestamp ts = new java.sql.Timestamp(date.getTime());
+				retassignment.setAssignmentStatusTimeStamp(ts.toString());
+				retassignment.setEstimateStatusTimeStamp(ts.toString());
+				retassignment.setEstimateStatus("waiting");
+				retassignment.setEstimateCost("$10");
+				retassignment.setEstimateTime("5 min");
+				workassignmentRespository.update(retassignment);
+				
+				System.out.println("WorkAssignment Status = " + retassignment.getAssignmentStatus());
+				System.out.println("Work Estimate Status = " + retassignment.getEstimateStatus());
+				System.out.println("Work Estimate Cost = " + retassignment.getEstimateCost());
+				System.out.println("Work Estimate Time = " + retassignment.getEstimateTime());
+			
+			
+		    }
+		    if( retassignment.getAssignmentStatus() != null && 
+		    		retassignment.getEstimateStatus().equals("approved") && retassignment.getWorkInputID() != null && retassignment.getWorkOutputID() == null)
 		    {
 		    	  WorkOutputRepository workOutputRespository = new WorkOutputRepository(iodb);
 				    
@@ -118,9 +141,20 @@ public class WorkerClient {
 				    outputVals.put("Drive Step 3", "Take I-95 South");
 				    output.setResults(outputVals);
 				    
+				    ArrayList authors = new ArrayList();
+					authors.add(retassignment.getWorkerID());
+					
+					output.setAuthors(authors);
 				    workOutputRespository.add(output);
 				    retassignment.setWorkOutputID(output.getWorkOutputID());
+				    retassignment.setAssignmentStatus("outputgiven");
 				    workassignmentRespository.update(retassignment);
+		    }
+		    
+		    if( retassignment.getAssignmentStatus() != null && 
+		    		retassignment.getEstimateStatus().equals("rejected") )
+		    {
+		    	System.out.println("Work Estimate is Rejected by the user");
 		    }
 		    
 		  //  feed.cancel();

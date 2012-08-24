@@ -32,18 +32,19 @@ public class HPCClient {
 		long deadLine = 10000; // milleseconds
 
 		Cost cost = new Cost();
-		cost.setWorkHours(1);  //Assuming 1 hour task
-		cost.setMoney(new BigDecimal(10.00)); // Money 10 dollar 
+		cost.setWorkHours(1); // Assuming 1 hour task
+		cost.setMoney(new BigDecimal(10.00)); // Money 10 dollar
 		cost.setEffort(10); // Effort scale 1-100, 10 being the least effort
 
 		HashMap<String, String> hpcResponse = hpc.invoke(taskDescription,
 				input, deadLine, skillsNeeded, cost);
-
-		for (Map.Entry<String, String> entry : hpcResponse.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-			System.out.println("HPC Response Key = " + key);
-			System.out.println("HPC Response Value = " + value);
+		if (hpcResponse != null) {
+			for (Map.Entry<String, String> entry : hpcResponse.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				System.out.println("HPC Response Key = " + key);
+				System.out.println("HPC Response Value = " + value);
+			}
 		}
 	}
 

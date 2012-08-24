@@ -1,6 +1,7 @@
 package edu.rutgers.hpc;
 
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.codehaus.jackson.annotate.*;
@@ -17,6 +18,14 @@ public class WorkAssignment extends CouchDbDocument {
 	private String status;
 	private String workInputID;
 	private String workOutputID;
+	private String assignmentStatus;
+	
+	private String estimateStatus;
+	private String assignmentStatusTimeStamp;
+	private String estimateStatusTimeStamp;
+	private String estimateTime;
+	private String estimateCost;
+	private ArrayList authors;
 	
 	public WorkAssignment()
 	{
@@ -71,6 +80,49 @@ public class WorkAssignment extends CouchDbDocument {
 	}
 	public void setWorkOutputID(String workOutputID) {
 		this.workOutputID = workOutputID;
+	}
+	public String getAssignmentStatus() {
+		return assignmentStatus;
+	}
+	public void setAssignmentStatus(String assignmentStatus) {
+		this.assignmentStatus = assignmentStatus;
+	}
+	
+	public String getEstimateStatus() {
+		return estimateStatus;
+	}
+	public void setEstimateStatus(String estimateStatus) {
+		this.estimateStatus = estimateStatus;
+	}
+	public String getAssignmentStatusTimeStamp() {
+		return assignmentStatusTimeStamp;
+	}
+	public void setAssignmentStatusTimeStamp(String assignmentStatusTimeStamp) {
+		this.assignmentStatusTimeStamp = assignmentStatusTimeStamp;
+	}
+	public String getEstimateStatusTimeStamp() {
+		return estimateStatusTimeStamp;
+	}
+	public void setEstimateStatusTimeStamp(String estimateStatusTimeStamp) {
+		this.estimateStatusTimeStamp = estimateStatusTimeStamp;
+	}
+	public String getEstimateTime() {
+		return estimateTime;
+	}
+	public void setEstimateTime(String estimateTime) {
+		this.estimateTime = estimateTime;
+	}
+	public String getEstimateCost() {
+		return estimateCost;
+	}
+	public void setEstimateCost(String estimateCost) {
+		this.estimateCost = estimateCost;
+	}
+	public ArrayList getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList authors) {
+		this.authors = authors;
 	}
 	
 

@@ -18,6 +18,7 @@ public class WorkOutput  extends CouchDbDocument
 	private Cost actualCost;
 	private String type;
 	private String workOutputID;
+	private ArrayList authors;
 	
 	
 	public WorkOutput()
@@ -55,6 +56,12 @@ public class WorkOutput  extends CouchDbDocument
 	}
 	public void setWorkOutputID(String workOutputID) {
 		this.workOutputID = workOutputID;
+	}
+	public ArrayList getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList authors) {
+		this.authors = authors;
 	}
 	
 }

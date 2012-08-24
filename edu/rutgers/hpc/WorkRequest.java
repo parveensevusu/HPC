@@ -1,6 +1,7 @@
 package edu.rutgers.hpc;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class WorkRequest extends CouchDbDocument{
 	private String requestID;
 	private Timestamp deadLine;
 	private String taskDescription;
+	private ArrayList authors;
 	
 	public WorkRequest()
 	{
@@ -64,6 +66,12 @@ public class WorkRequest extends CouchDbDocument{
 	}
 	public void setTaskDescription(String taskDescription) {
 		this.taskDescription = taskDescription;
+	}
+	public ArrayList getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList authors) {
+		this.authors = authors;
 	}
 	
 
